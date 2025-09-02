@@ -79,10 +79,9 @@ class InMemoryWorkflowRepository:
             if status and w.status.value != status:
                 return False
             if script_path:
-                # naive match using metadata 'script_path' or folder path
+                # Only match exact script_path in metadata
                 meta_script = w.metadata.get("script_path") if w.metadata else None
-                folder = w.git.folder or ""
-                if not (meta_script == script_path or folder.endswith(script_path)):
+                if meta_script != script_path:
                     return False
             if stage:
                 if stage.value not in w.stage_results:
